@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp">
+    <ImageView
+        android:id="@+id/image_izq"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/msg_izq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="7dp"
+        app:layout_constraintStart_toEndOf="@+id/image_izq"
+        app:layout_constraintTop_toTopOf="@+id/image_izq"
+        android:background="@drawable/mensaje_round">
+
+        <TextView
+            android:id="@+id/contenido_mensaje_izq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:text="feefefefefefefe"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fecha_mensaje_izq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contenido_mensaje_izq"
+            android:layout_alignStart="@id/contenido_mensaje_izq"
+            android:text="DD/MM/AAAA"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="@+id/contenido_mensaje_izq"
+            app:layout_constraintTop_toBottomOf="@+id/contenido_mensaje_izq"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/image_der"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/msg_der"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="7dp"
+        app:layout_constraintEnd_toStartOf="@+id/image_der"
+        app:layout_constraintTop_toTopOf="@+id/image_der"
+        android:background="@drawable/mensaje_round">
+
+        <TextView
+            android:id="@+id/contenido_mensaje_der"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:text="feefefefefefefe"
+            android:textColor="@color/black"
+            android:textAlignment="textEnd"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/fecha_mensaje_der"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DD/MM/AAAA"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintEnd_toEndOf="@+id/contenido_mensaje_der"
+            app:layout_constraintTop_toBottomOf="@+id/contenido_mensaje_der"
+            app:layout_constraintVertical_bias="1.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

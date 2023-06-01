@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192106970282",
+    "project_id": "estapallorarle-66ec7",
+    "storage_bucket": "estapallorarle-66ec7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192106970282:android:53918f41bb43d94d6f24d3",
+        "android_client_info": {
+          "package_name": "com.example.estapallorarlegest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192106970282-7mmot8njc406bncoit6b91n6hm18aaec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb3qJgsOodc531TSlsz3qz32kaJeiRzW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192106970282-7mmot8njc406bncoit6b91n6hm18aaec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

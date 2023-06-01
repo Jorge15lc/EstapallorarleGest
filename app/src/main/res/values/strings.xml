@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EstapallorarleGest</string>
+    <string name="app_id">com.example.estapalloralegest</string>
+    <string name="db_root">tienda</string>
+    <string name="id_canal">canal_pedidos</string>
+    <string name="nombre_canal">CANAL DE PEDIDOS</string>
+    <string name="descripcion_canal">CANAL UNICAMENTE PARA PEDIDOS</string>
+</resources>

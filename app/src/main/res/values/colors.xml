@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--  Paleta de colores principal  -->
+    <color name="colorPrimario">#E9B3B3</color>
+    <color name="primarioApagado">#815C5C</color>
+    <color name="colorSecundario">#E4E5E7</color>
+    <color name="colorTerciario">#91563F</color>
+    <color name="colorTerciarioApagado">#513225</color>
+    <color name="colorTerciarioClaro">#B38A7B</color>
+    <color name="colorCuarto">#595858</color>
+    <color name="colorQuinto">#FFE7D4</color>
+    <color name="orange">#EBB410</color>
+    <color name="crema">#D6C3AA</color>
+
+    <!-- textLayoutcolors  -->
+
+
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

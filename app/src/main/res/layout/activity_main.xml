@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/resgister_enl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Crea una cuenta"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/info_reg"
+        app:layout_constraintEnd_toEndOf="@+id/pass_user_layout"
+        app:layout_constraintStart_toEndOf="@+id/info_reg"
+        app:layout_constraintTop_toTopOf="@+id/info_reg" />
+
+    <Button
+        android:id="@+id/iniciar_ses_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Iniciar Sesión"
+        android:textColor="@color/colorSecundario"
+        app:layout_constraintEnd_toEndOf="@+id/pass_user_layout"
+        app:layout_constraintStart_toStartOf="@+id/pass_user_layout"
+        app:layout_constraintTop_toBottomOf="@+id/pass_user_layout" />
+
+    <ImageView
+        android:id="@+id/logo_estapallorale_img"
+        android:layout_width="330dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/estapallorarle_logo_large_pink" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nom_user_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="@+id/logo_estapallorale_img"
+        app:layout_constraintEnd_toEndOf="@+id/logo_estapallorale_img"
+        app:layout_constraintTop_toBottomOf="@+id/logo_estapallorale_img">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nom_user_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/colorPrimario"
+            android:inputType="text"
+            android:textSize="18dp"
+            android:textColor="@color/colorSecundario"
+            android:hint="Nombre de Usuario" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass_user_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/nom_user_layout"
+        app:layout_constraintStart_toStartOf="@+id/nom_user_layout"
+        app:layout_constraintTop_toBottomOf="@+id/nom_user_layout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorSecundario">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pass_user_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:outlineAmbientShadowColor="@color/colorPrimario"
+            android:textColor="@color/colorSecundario"
+            android:textSize="18dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/info_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Inicia sesion con Google o  "
+        android:textAlignment="center"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/pass_user_layout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pass_user_layout"
+        app:layout_constraintTop_toBottomOf="@+id/iniciar_ses_btn" />
+
+    <ImageView
+        android:id="@+id/google_register_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toEndOf="@+id/resgister_enl"
+        app:layout_constraintStart_toStartOf="@+id/info_reg"
+        app:layout_constraintTop_toBottomOf="@+id/info_reg"
+        app:srcCompat="@drawable/google_logo_" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

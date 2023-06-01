@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="5dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTerciarioClaro"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/img_prod_item"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/estapallorarle_logo_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/status_prod_disp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_brightness_2_24"
+            app:layout_constraintTop_toTopOf="@+id/img_prod_item"
+            app:layout_constraintEnd_toEndOf="@+id/img_prod_item"/>
+
+        <TextView
+            android:id="@+id/item_nom_prod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cheesecake de Lotus"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/edit_prod_item"
+            app:layout_constraintStart_toEndOf="@+id/img_prod_item"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/item_nom_prod"
+            app:layout_constraintStart_toStartOf="@+id/item_nom_prod"
+            app:layout_constraintTop_toBottomOf="@+id/item_nom_prod">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stock: "
+                android:textSize="15dp"
+                android:layout_marginStart="7dp"
+                app:layout_constraintEnd_toStartOf="@+id/stock_prod_tv"
+                app:layout_constraintStart_toEndOf="@+id/precio_prod_tv"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/stock_prod_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio: "
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/precio_prod_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3.5"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/desc_prod_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxWidth="200dp"
+            android:textAlignment="center"
+            android:text="Cookie jungly con muchdwadwadwad wao"
+            app:layout_constraintEnd_toStartOf="@+id/edit_prod_item"
+            app:layout_constraintStart_toEndOf="@+id/img_prod_item"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+
+        <ImageView
+            android:id="@+id/edit_prod_item"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/add_to_cart_prod"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_add_shopping_cart_24"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_prod_item"
+            app:layout_constraintEnd_toEndOf="@+id/edit_prod_item"
+            app:layout_constraintStart_toStartOf="@+id/edit_prod_item"
+            app:layout_constraintTop_toTopOf="@+id/edit_prod_item" />
+
+        <ImageView
+            android:id="@+id/ir_chat_prod"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_chat_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

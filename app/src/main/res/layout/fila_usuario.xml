@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/mensaje_round"
+    android:padding="7dp"
+    android:layout_margin="7dp">
+
+    <ImageView
+        android:id="@+id/img_user_fila"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="7dp"
+        tools:srcCompat="@tools:sample/avatars"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/nombre_user_fila"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Juancho talarga"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/ban_user"
+        app:layout_constraintStart_toEndOf="@+id/img_user_fila"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/correo_user_fila"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Juancho@gmail.com"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_user_fila"
+        app:layout_constraintEnd_toStartOf="@+id/ban_user"
+        app:layout_constraintStart_toEndOf="@+id/img_user_fila"/>
+
+    <TextView
+        android:id="@+id/fecha_user_fila"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="YYYY/MM/DD"
+        app:layout_constraintEnd_toStartOf="@+id/ban_user"
+        app:layout_constraintStart_toEndOf="@+id/img_user_fila"
+        app:layout_constraintTop_toBottomOf="@+id/correo_user_fila" />
+
+    <Switch
+        android:id="@+id/ban_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activo"
+        android:textSize="12dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

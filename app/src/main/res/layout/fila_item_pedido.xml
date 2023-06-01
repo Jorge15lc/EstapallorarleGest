@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@color/colorTerciarioClaro">
+
+        <TextView
+            android:id="@+id/nom_pedido_prod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Producto solicitado Nom"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_pedido_prod"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/img_pedido_prod"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="7dp"
+            android:padding="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/image_circle_layer"/>
+
+
+        <TextView
+            android:id="@+id/ped_estado_ex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="Estado: "
+            app:layout_constraintBottom_toBottomOf="@+id/ped_estado_tv"
+            app:layout_constraintStart_toEndOf="@+id/img_pedido_prod"
+            app:layout_constraintTop_toTopOf="@+id/ped_estado_tv" />
+
+        <TextView
+            android:id="@+id/ped_estado_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Aceptado"
+            app:layout_constraintBottom_toBottomOf="@+id/ped_estado_img"
+            app:layout_constraintStart_toEndOf="@+id/ped_estado_ex"
+            app:layout_constraintTop_toTopOf="@+id/ped_estado_img" />
+
+        <TextView
+            android:id="@+id/ped_nom_cli_ex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Cliente: "
+            app:layout_constraintStart_toStartOf="@id/ped_estado_ex"
+            app:layout_constraintTop_toBottomOf="@+id/ped_estado_img" />
+
+        <TextView
+            android:id="@+id/ped_nom_cli_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Juancho Talarga"
+            app:layout_constraintBottom_toBottomOf="@id/ped_nom_cli_ex"
+            app:layout_constraintStart_toEndOf="@+id/ped_nom_cli_ex"
+            app:layout_constraintTop_toTopOf="@id/ped_nom_cli_ex" />
+
+        <ImageView
+            android:id="@+id/ped_estado_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_baseline_check_circle_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nom_pedido_prod" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_ped_row"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ped_nom_cli_ex"
+            app:layout_constraintTop_toBottomOf="@+id/ped_nom_cli_ex">
+
+            <ImageView
+                android:id="@+id/acept_ped_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_check_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/denegate_ped_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/ped_listo_btn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Listo"
+            android:textSize="12dp"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_ped_row"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_ped_row"
+            app:layout_constraintStart_toStartOf="@+id/bottom_ped_row"
+            app:layout_constraintTop_toTopOf="@+id/bottom_ped_row" />
+
+        <Button
+            android:id="@+id/ped_recogido_btn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Recogido"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_ped_row"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_ped_row"
+            app:layout_constraintStart_toStartOf="@+id/bottom_ped_row"
+            app:layout_constraintTop_toTopOf="@+id/bottom_ped_row" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
