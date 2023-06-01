@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.estapallorarlegest.pedidos.Pedido
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
-                                            pojo_ped, pojo_ped.id!!,
+                                            pojo_ped.id!!,
                                             "Nuevo pedido de ${pojo_ped.nom_comprador}",
                                             "Nuevo Pedido de ${pojo_ped.nom_producto}",
                                             VerPedidos::class.java)
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
-                                            pojo_ped, pojo_ped.id!!,
+                                            pojo_ped.id!!,
                                             "El pedido de ${pojo_ped.nom_comprador} ha sido recogido",
                                             "Pedido Recogido", VerPedidos::class.java)
                     }
@@ -143,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
-                                            pojo_ped, pojo_ped.id!!,
+                                            pojo_ped.id!!,
                                             "Tu pedido de ${pojo_ped.nom_producto} está en preparación",
                                             "Pedido Horneandose", VerPedidos::class.java)
                     }
@@ -153,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
-                                            pojo_ped, pojo_ped.id!!,
+                                            pojo_ped.id!!,
                                             "Tu pedido de ${pojo_ped.nom_producto} está esperandote 😊",
                                             "Pedido Esperandote", VerPedidos::class.java)
                     }
@@ -163,10 +164,10 @@ class MainActivity : AppCompatActivity() {
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
-                            pojo_ped, pojo_ped.id!!,
-                            "Tu pedido de ${pojo_ped.nom_producto} ha sido rechazado",
-                            "Pedido Rechazado", VerPedidos::class.java)
-                    }
+                                            pojo_ped.id!!,
+                                            "Tu pedido de ${pojo_ped.nom_producto} ha sido rechazado",
+                                            "Pedido Rechazado", VerPedidos::class.java)
+                            }
                 }
 
                 override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -187,12 +188,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun generarNotificacion(id_noti : Int, pojo : Parcelable, pojo_id : String, contenido : String, titulo : String, destino:Class<*>){
+    private fun generarNotificacion(id_noti : Int, pojo_id : String, contenido : String, titulo : String, destino:Class<*>){
         val idcanal = getString(R.string.id_canal)
         val iconolargo = BitmapFactory.decodeResource(resources, R.drawable.cookie_logo)
         val actividad = Intent(applicationContext, destino)
         actividad.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        actividad.putExtra("producto", pojo)
         val pendingIntent = PendingIntent.getActivity(this, 0, actividad, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificacion = NotificationCompat.Builder(this, idcanal)

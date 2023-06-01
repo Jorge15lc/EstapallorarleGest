@@ -96,13 +96,16 @@ class Utilidades {
                 img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_wb_sunny_24))
             }
             val ID = R.string.app_id
-            val sp_name = "${ID}_Night_Mode_Status"
-            val SP = context.getSharedPreferences(sp_name, 0)
+            val sp_modo = "${ID}_Night_Mode_Status"
+            val SP = context.getSharedPreferences(sp_modo, 0)
+
+
 
             with(SP.edit()) {
                 putBoolean("mode", value)
                 commit()
             }
+            println("SHARED PREFERENCES NIGHT MODE: "+SP.getBoolean("mode", false))
         }
 
         fun animacion(contexto: Context): CircularProgressDrawable {

@@ -38,7 +38,7 @@ class VerPedidos : AppCompatActivity() {
         //TODO NOTIFICACIONES ADMIN: NUEVO PEDIDO Y ENTREGADO, USER: RECHAZADO O ACEPTADO Y LISTO
 
 
-        lista = mutableListOf<Pedido>()
+        lista = mutableListOf()
 
         db_ref.child("tienda").child("pedidos")
             .addValueEventListener(object :ValueEventListener{

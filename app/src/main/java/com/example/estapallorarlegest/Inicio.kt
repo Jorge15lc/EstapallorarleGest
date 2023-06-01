@@ -8,6 +8,7 @@ import android.os.Environment
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -130,8 +131,7 @@ class Inicio : AppCompatActivity() {
         this_activity = this
 
         val id = Utilidades.obtenerIDuser(applicationContext)
-        switch_ui.isChecked=Utilidades.getModeStatus(applicationContext)
-        Utilidades.changeModeStatus(applicationContext, Utilidades.getModeStatus(applicationContext), ui_img)
+
 
 //        TODO SETEAR LO DEL
 //        if (!Utilidades.esAdmin(applicationContext)){
@@ -246,9 +246,12 @@ class Inicio : AppCompatActivity() {
         }
 
         //Funcionamiento de los botones
-
+        switch_ui.isChecked = Utilidades.getModeStatus(applicationContext)
+        Utilidades.changeModeStatus(applicationContext, switch_ui.isChecked, ui_img)
 
         switch_ui.setOnCheckedChangeListener { button, b ->
+
+            println("MODO NOCHE CHECKED CHANGE: "+Utilidades.getModeStatus(applicationContext))
             Utilidades.changeModeStatus(applicationContext, b, ui_img)
         }
 
@@ -286,22 +289,23 @@ class Inicio : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            val clave_id = "id"
             val ID = applicationContext.getString(R.string.app_id)
-            val sp_name = "${ID}_Registro_Usuarios"
-            val SP_id = applicationContext.getSharedPreferences(sp_name, 0)
-            val SP_tipo = applicationContext.getSharedPreferences(sp_name, 0)
-            val SP_url = applicationContext.getSharedPreferences(sp_name, 0)
+            val sp_id = "${ID}_Registro_Usuarios"
+            val sp_tipo = "${ID}_Tipo_Usuario"
+            val sp_url = "${ID}_Imagen_Usuario"
+            val SP_id = applicationContext.getSharedPreferences(sp_id, 0)
+            val SP_tipo = applicationContext.getSharedPreferences(sp_tipo, 0)
+            val SP_url = applicationContext.getSharedPreferences(sp_url, 0)
             with(SP_id.edit()){
-                putString(clave_id, "")
+                putString("id", "")
                 commit()
             }
             with(SP_tipo.edit()){
-                putString(clave_id, "")
+                putString("tipo", "")
                 commit()
             }
             with(SP_url.edit()){
-                putString(clave_id, "")
+                putString("imagen", "")
                 commit()
             }
             startActivity(Intent(applicationContext, MainActivity::class.java))

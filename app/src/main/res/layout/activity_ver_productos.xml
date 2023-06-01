@@ -49,17 +49,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/dropdown_price_filters"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:scaleY="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_circle_24" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_prod_btn"
         android:layout_width="wrap_content"

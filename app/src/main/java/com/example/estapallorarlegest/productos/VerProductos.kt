@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -41,9 +42,9 @@ class VerProductos : AppCompatActivity() {
         findViewById(R.id.precios_range_slider)
     }
 
-    val dropdownFilters : ImageView by lazy {
-        findViewById(R.id.dropdown_price_filters)
-    }
+//    val dropdownFilters : Button by lazy {
+//        findViewById(R.id.dropdown_price_filters)
+//    }
 
     val db_ref : DatabaseReference by lazy {
         FirebaseDatabase.getInstance().getReference()
@@ -57,6 +58,7 @@ class VerProductos : AppCompatActivity() {
     private lateinit var adaptador: ProductosAdaptador
 
     var query = ""
+    private var cont = 0
     private var lista_bool = MutableList(Utilidades.lista_categorias.size){true}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,17 +136,7 @@ class VerProductos : AppCompatActivity() {
                 })
         }
 
-        var cont = 0
-        dropdownFilters.setOnClickListener {
-            cont++
-            if( cont % 2 != 0){
-                constraint.visibility = View.VISIBLE
 
-            }else{
-                constraint.visibility = View.GONE
-            }
-
-        }
 
 
 
@@ -156,7 +148,19 @@ class VerProductos : AppCompatActivity() {
                 multipleChoiceCategories()
                 adaptador.notifyDataSetChanged()
                 true
-            }else -> super.onOptionsItemSelected(item)
+            }
+
+            R.id.filtros_precios_prods -> {
+                cont++
+
+                if( cont % 2 != 0){
+                    constraint.visibility = View.VISIBLE
+                }else{
+                    constraint.visibility = View.GONE
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -203,5 +207,10 @@ class VerProductos : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onBackPressed() {
+        cont = 0
+        super.onBackPressed()
     }
 }

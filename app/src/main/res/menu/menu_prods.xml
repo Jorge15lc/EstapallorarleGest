@@ -9,6 +9,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView"  />
     <item
+        android:id="@+id/filtros_precios_prods"
+        android:title="Filtro Por Precio"
+        android:icon="@drawable/ic_baseline_arrow_drop_down_24"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/filtros_temas_prods"
         android:title="Filtros Por Categorias"
         android:icon="@drawable/ic_baseline_filter_alt_24"
