@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                     val id_noti = generador.incrementAndGet()
 
                     if (pojo_ped.estado == 3
-                        && Utilidades.esAdmin(applicationContext)
+                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
