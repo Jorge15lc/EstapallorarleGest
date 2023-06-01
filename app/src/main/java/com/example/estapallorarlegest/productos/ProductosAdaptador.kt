@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.estapallorarlegest.R
+import com.example.estapallorarlegest.Usuario
 import com.example.estapallorarlegest.Utilidades
 import com.example.estapallorarlegest.pedidos.Pedido
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -95,18 +95,31 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, var selectedCa
             }
             holder.addcart.setOnLongClickListener {
                 val id_pedido = db_ref.child("tienda").child("pedidos").push().key!!
+
                 GlobalScope.launch(Dispatchers.IO) {
-                    db_ref.child("tienda").child("pedidos").child(id_pedido).setValue(
-                        Pedido(
-                            id_pedido,
-                            0,
-                            item.id,
-                            item.nombre,
-                            item.url_foto,
-                            Utilidades.obtenerIDuser(contexto),
-                            nombre_us,
-                        )
-                    )
+                    db_ref.child("tienda").child("usuarios").child(Utilidades.obtenerIDuser(contexto))
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val pojo = snapshot.getValue(Usuario::class.java)!!
+
+                                db_ref.child("tienda").child("pedidos").child(id_pedido).setValue(
+                                    Pedido(
+                                        id_pedido,
+                                        0,
+                                        item.id,
+                                        item.nombre,
+                                        item.url_foto,
+                                        pojo.id,
+                                        pojo.nombre,
+                                    )
+                                )
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+
                 }
 
                 Toast.makeText(contexto, "Producto Pedido", Toast.LENGTH_SHORT).show()

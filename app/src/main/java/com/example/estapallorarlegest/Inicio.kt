@@ -130,6 +130,8 @@ class Inicio : AppCompatActivity() {
         this_activity = this
 
         val id = Utilidades.obtenerIDuser(applicationContext)
+        switch_ui.isChecked=Utilidades.getModeStatus(applicationContext)
+        Utilidades.changeModeStatus(applicationContext, Utilidades.getModeStatus(applicationContext), ui_img)
 
 //        TODO SETEAR LO DEL
 //        if (!Utilidades.esAdmin(applicationContext)){
@@ -244,7 +246,7 @@ class Inicio : AppCompatActivity() {
         }
 
         //Funcionamiento de los botones
-        //switch_ui.isChecked=Utilidades.getModeStatus(applicationContext)
+
 
         switch_ui.setOnCheckedChangeListener { button, b ->
             Utilidades.changeModeStatus(applicationContext, b, ui_img)

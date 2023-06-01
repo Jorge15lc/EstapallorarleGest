@@ -132,19 +132,6 @@ class VerProductos : AppCompatActivity() {
                         TODO("Not yet implemented")
                     }
                 })
-
-            db_ref.child("tienda").child("usuarios").child(Utilidades.obtenerIDuser(applicationContext))
-                .addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val pojo = snapshot.getValue(Usuario::class.java)!!
-                        adaptador.nombre_us = pojo.nombre!!
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
-
         }
 
         var cont = 0

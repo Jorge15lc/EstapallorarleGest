@@ -93,7 +93,7 @@ class Utilidades {
                 img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_bedtime_24))
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_bedtime_24))
+                img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_wb_sunny_24))
             }
             val ID = R.string.app_id
             val sp_name = "${ID}_Night_Mode_Status"
