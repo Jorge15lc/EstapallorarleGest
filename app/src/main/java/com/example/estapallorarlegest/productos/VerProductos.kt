@@ -22,6 +22,10 @@ import com.example.estapallorarlegest.Utilidades
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.slider.RangeSlider
 import com.google.firebase.database.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.concurrent.CountDownLatch
 
 class VerProductos : AppCompatActivity() {
 
@@ -59,8 +63,6 @@ class VerProductos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_productos)
 
-        //TODO FILTROS POR NOMBRE, CATEGORIA O PRECIO
-
         if (Utilidades.esAdmin(applicationContext)){
             title = "Administrar Productos"
             ir_crear_prod.setOnClickListener {
@@ -75,58 +77,75 @@ class VerProductos : AppCompatActivity() {
 
         var prodmin = 0.0f
         var prodmax = 5.0f
+        val semaforo = CountDownLatch(1)
 
-
-        db_ref.child("tienda").child("productos")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    lista.clear()
-                    snapshot.children.forEach {
-                        val pojo = it.getValue(Producto::class.java)!!
-                        if (Utilidades.esAdmin(applicationContext)) {
-                            lista.add(pojo)
-                        } else {
-                            if (pojo.disponible!!) {
+        GlobalScope.launch (Dispatchers.IO){
+            db_ref.child("tienda").child("productos")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        lista.clear()
+                        snapshot.children.forEach {
+                            val pojo = it.getValue(Producto::class.java)!!
+                            if (Utilidades.esAdmin(applicationContext)) {
                                 lista.add(pojo)
+                                semaforo.countDown()
+                            } else {
+                                if (pojo.disponible!!) {
+                                    lista.add(pojo)
+                                    semaforo.countDown()
+                                }
                             }
+                        }
+                        semaforo.await()
+                        //SETEO DE VALORES DEL SLIDER INICIALES
+                        prodmin = lista.minOf { it.precio!! }.toFloat() - 1
+                        prodmax = lista.maxOf { it.precio!! }.toFloat() + 3
+                        priceSlider.valueFrom = prodmin
+                        priceSlider.valueTo = prodmax
+                        priceSlider.setValues(prodmin, prodmax)
+
+                        //Inicializando el adaptador dentro de onDataChange
+                        adaptador = ProductosAdaptador(lista)
+                        adaptador.precio_min = prodmin
+                        adaptador.precio_max = prodmax
+                        recycler.adapter = adaptador
+                        recycler.layoutManager = LinearLayoutManager(applicationContext)
+                        recycler.setHasFixedSize(true)
+                        recycler.adapter?.notifyDataSetChanged()
+
+                        //Configuración del rango de deslizador en onDataChange
+                        priceSlider.addOnChangeListener { slider, value, fromUs ->
+                            val values = slider.values
+
+                            var min = values[0]
+                            var max = values[1]
+
+
+                            adaptador.precio_min = min
+                            adaptador.precio_max = max
+                            adaptador.filter.filter(query)
+                            adaptador.notifyDataSetChanged()
                         }
                     }
 
-                    //SETEO DE VALORES DEL SLIDER INICIALES
-                    prodmin = lista.minOf { it.precio!! }.toFloat() - 1
-                    prodmax = lista.maxOf { it.precio!! }.toFloat() + 3
-                    priceSlider.valueFrom = prodmin
-                    priceSlider.valueTo = prodmax
-                    priceSlider.setValues(prodmin, prodmax)
-
-                    //Inicializando el adaptador dentro de onDataChange
-                    adaptador = ProductosAdaptador(lista)
-                    adaptador.precio_min = prodmin
-                    adaptador.precio_max = prodmax
-                    recycler.adapter = adaptador
-                    recycler.layoutManager = LinearLayoutManager(applicationContext)
-                    recycler.setHasFixedSize(true)
-                    recycler.adapter?.notifyDataSetChanged()
-
-                    //Configuración del rango de deslizador en onDataChange
-                    priceSlider.addOnChangeListener { slider, value, fromUs ->
-                        val values = slider.values
-
-                        var min = values[0]
-                        var max = values[1]
-
-
-                        adaptador.precio_min = min
-                        adaptador.precio_max = max
-                        adaptador.filter.filter(query)
-                        adaptador.notifyDataSetChanged()
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
                     }
-                }
+                })
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
+            db_ref.child("tienda").child("usuarios").child(Utilidades.obtenerIDuser(applicationContext))
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val pojo = snapshot.getValue(Usuario::class.java)!!
+                        adaptador.nombre_us = pojo.nombre!!
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
+        }
 
         var cont = 0
         dropdownFilters.setOnClickListener {
@@ -140,17 +159,7 @@ class VerProductos : AppCompatActivity() {
 
         }
 
-        db_ref.child("tienda").child("usuarios").child(Utilidades.obtenerIDuser(applicationContext))
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val pojo = snapshot.getValue(Usuario::class.java)!!
-                    adaptador.nombre_us = pojo.nombre!!
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
 
     }
 

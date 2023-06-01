@@ -105,7 +105,6 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, var selectedCa
                             item.url_foto,
                             Utilidades.obtenerIDuser(contexto),
                             nombre_us,
-                            System.currentTimeMillis()
                         )
                     )
                 }

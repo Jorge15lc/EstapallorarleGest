@@ -80,12 +80,14 @@ class PedidosAdaptador(var lista_pedidos : MutableList<Pedido>):RecyclerView.Ada
 
             holder.accept_btn.setOnClickListener {
                 db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("estado").setValue(1)
+                db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("notificado").setValue(false)
                 holder.constraint_accept.visibility = View.INVISIBLE
                 holder.listo_btn.visibility = View.VISIBLE
             }
 
             holder.denegate_btn.setOnClickListener {
                 db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("estado").setValue(4)
+                db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("notificado").setValue(false)
                 holder.constraint_accept.visibility = View.INVISIBLE
             }
 
@@ -93,6 +95,7 @@ class PedidosAdaptador(var lista_pedidos : MutableList<Pedido>):RecyclerView.Ada
 
             holder.listo_btn.setOnClickListener {
                 db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("estado").setValue(2)
+                db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("notificado").setValue(false)
                 holder.listo_btn.visibility = View.INVISIBLE
                 holder.recogido_btn.visibility = View.VISIBLE
             }
@@ -101,6 +104,7 @@ class PedidosAdaptador(var lista_pedidos : MutableList<Pedido>):RecyclerView.Ada
 
             holder.recogido_btn.setOnClickListener {
                 db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("estado").setValue(3)
+                db_ref.child("tienda").child("pedidos").child(item_actual.id!!).child("notificado").setValue(false)
                 holder.recogido_btn.visibility = View.INVISIBLE
             }
         }else{

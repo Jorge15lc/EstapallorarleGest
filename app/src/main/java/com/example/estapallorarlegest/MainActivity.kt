@@ -106,12 +106,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //NOtificaciones
-        val ID = R.string.app_id
-        val sp_name = "${ID}_timeStamp_noti"
-        val SP = applicationContext.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
-        val lastChecked = SP.getLong("ultimoChequeo", 0)
-
         db_ref.child("tienda").child("pedidos")
             .addChildEventListener(object : ChildEventListener{
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -120,12 +114,13 @@ class MainActivity : AppCompatActivity() {
 
                     if  (pojo_ped.estado == 0
                         &&  Utilidades.esAdmin(applicationContext)
-                        && pojo_ped.timestamp!! > lastChecked){
-                        generarNotificacion(id_noti, pojo_ped, "Nuevo pedido de ${pojo_ped.nom_comprador}", "Nuevo Pedido de ${pojo_ped.nom_producto}", VerPedidos::class.java)
+                        && !pojo_ped.notificado!!){
 
-                        val editor = SP.edit()
-                        editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                        editor.apply()
+                        generarNotificacion(id_noti,
+                                            pojo_ped, pojo_ped.id!!,
+                                            "Nuevo pedido de ${pojo_ped.nom_comprador}",
+                                            "Nuevo Pedido de ${pojo_ped.nom_producto}",
+                                            VerPedidos::class.java)
                     }
                 }
 
@@ -135,39 +130,42 @@ class MainActivity : AppCompatActivity() {
 
                     if (pojo_ped.estado == 3
                         && Utilidades.esAdmin(applicationContext)
-                        && pojo_ped.timestamp!! > lastChecked){
-                        generarNotificacion(id_noti, pojo_ped, "El pedido de ${pojo_ped.nom_comprador} ha sido recogido", "Pedido Recogido", VerPedidos::class.java)
+                        && !pojo_ped.notificado!!){
 
-                        val editor = SP.edit()
-                        editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                        editor.apply()
+                        generarNotificacion(id_noti,
+                                            pojo_ped, pojo_ped.id!!,
+                                            "El pedido de ${pojo_ped.nom_comprador} ha sido recogido",
+                                            "Pedido Recogido", VerPedidos::class.java)
                     }
 
                     if (pojo_ped.estado == 1
-                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)){
-                        generarNotificacion(id_noti, pojo_ped, "Tu pedido de ${pojo_ped.nom_producto} está en preparación", "Pedido Horneandose", VerPedidos::class.java)
+                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
+                        && !pojo_ped.notificado!!){
 
-                        val editor = SP.edit()
-                        editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                        editor.apply()
+                        generarNotificacion(id_noti,
+                                            pojo_ped, pojo_ped.id!!,
+                                            "Tu pedido de ${pojo_ped.nom_producto} está en preparación",
+                                            "Pedido Horneandose", VerPedidos::class.java)
                     }
 
                     if (pojo_ped.estado == 2
-                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)){
-                        generarNotificacion(id_noti, pojo_ped, "Tu pedido de ${pojo_ped.nom_producto} está esperandote 😊", "Pedido Esperandote", VerPedidos::class.java)
+                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
+                        && !pojo_ped.notificado!!){
 
-                        val editor = SP.edit()
-                        editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                        editor.apply()
+                        generarNotificacion(id_noti,
+                                            pojo_ped, pojo_ped.id!!,
+                                            "Tu pedido de ${pojo_ped.nom_producto} está esperandote 😊",
+                                            "Pedido Esperandote", VerPedidos::class.java)
                     }
 
                     if (pojo_ped.estado == 4
-                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)){
-                        generarNotificacion(id_noti, pojo_ped, "Tu pedido de ${pojo_ped.nom_producto} ha sido rechazado", "Pedido Rechazado", VerPedidos::class.java)
+                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
+                        && !pojo_ped.notificado!!){
 
-                        val editor = SP.edit()
-                        editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                        editor.apply()
+                        generarNotificacion(id_noti,
+                            pojo_ped, pojo_ped.id!!,
+                            "Tu pedido de ${pojo_ped.nom_producto} ha sido rechazado",
+                            "Pedido Rechazado", VerPedidos::class.java)
                     }
                 }
 
@@ -180,9 +178,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    val editor = SP.edit()
-                    editor.putLong("ultimoChequeo", System.currentTimeMillis())
-                    editor.apply()
+                    TODO("Not yet implemented")
                 }
             })
 
@@ -191,7 +187,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun generarNotificacion(id_noti : Int, pojo : Parcelable, contenido : String, titulo : String, destino:Class<*>){
+    private fun generarNotificacion(id_noti : Int, pojo : Parcelable, pojo_id : String, contenido : String, titulo : String, destino:Class<*>){
         val idcanal = getString(R.string.id_canal)
         val iconolargo = BitmapFactory.decodeResource(resources, R.drawable.cookie_logo)
         val actividad = Intent(applicationContext, destino)
@@ -213,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)){
             notify(id_noti, notificacion)
         }
+        db_ref.child("tienda").child("pedidos").child(pojo_id).child("notificado").setValue(true)
     }
 
     private fun crearCanalNotificaciones(){

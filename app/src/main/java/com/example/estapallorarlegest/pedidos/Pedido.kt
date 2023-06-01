@@ -13,4 +13,5 @@ data class Pedido(
             var url_prod : String ?= null,
             var id_comprador : String ?= null,
             var nom_comprador : String ?= null,
-            var estado_noti : Int ?= 0):Parcelable
+            //0 No notificado, 1 Notificado
+            var notificado : Boolean ?= false):Parcelable
