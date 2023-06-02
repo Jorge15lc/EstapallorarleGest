@@ -87,10 +87,8 @@ class MainActivity : AppCompatActivity() {
                                 Utilidades.establecerTipoUser(applicationContext, pojo.admin!!)
                                 Utilidades.establecerUrlimgUser(applicationContext, pojo.imagen!!)
 
-                                //Unicamente para el toast!!!
-                                val ID = applicationContext.getString(R.string.app_id)
-                                val sp_name = "${ID}_Registro_Usuarios"
-                                val SP = applicationContext.getSharedPreferences("id", 0)
+
+
                                 input_nom.text!!.clear()
                                 input_pass.text!!.clear()
                                 startActivity(Intent(applicationContext, Inicio::class.java))
@@ -119,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
-                                            "Nuevo pedido de ${pojo_ped.nom_comprador}",
+                                            "Cliente: ${pojo_ped.nom_comprador}",
                                             "Nuevo Pedido de ${pojo_ped.nom_producto}",
                                             VerPedidos::class.java)
                     }
@@ -129,23 +127,13 @@ class MainActivity : AppCompatActivity() {
                     val pojo_ped = snapshot.getValue(Pedido::class.java)!!
                     val id_noti = generador.incrementAndGet()
 
-                    if (pojo_ped.estado == 3
-                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
-                        && !pojo_ped.notificado!!){
-
-                        generarNotificacion(id_noti,
-                                            pojo_ped.id!!,
-                                            "El pedido de ${pojo_ped.nom_comprador} ha sido recogido",
-                                            "Pedido Recogido", VerPedidos::class.java)
-                    }
-
                     if (pojo_ped.estado == 1
                         && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
                         && !pojo_ped.notificado!!){
 
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
-                                            "Tu pedido de ${pojo_ped.nom_producto} está en preparación",
+                                            "Tu ${pojo_ped.nom_producto} está en preparación",
                                             "Pedido Horneandose", VerPedidos::class.java)
                     }
 
@@ -155,8 +143,18 @@ class MainActivity : AppCompatActivity() {
 
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
-                                            "Tu pedido de ${pojo_ped.nom_producto} está esperandote 😊",
+                                            "Tu ${pojo_ped.nom_producto} está esperandote 😊",
                                             "Pedido Esperandote", VerPedidos::class.java)
+                    }
+
+                    if (pojo_ped.estado == 3
+                        && pojo_ped.id_comprador == Utilidades.obtenerIDuser(applicationContext)
+                        && !pojo_ped.notificado!!){
+
+                        generarNotificacion(id_noti,
+                            pojo_ped.id!!,
+                            "Tu ${pojo_ped.nom_producto} ha sido recogido",
+                            "Pedido Recogido", VerPedidos::class.java)
                     }
 
                     if (pojo_ped.estado == 4
@@ -165,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
-                                            "Tu pedido de ${pojo_ped.nom_producto} ha sido rechazado",
+                                            "Tu ${pojo_ped.nom_producto} ha sido rechazado",
                                             "Pedido Rechazado", VerPedidos::class.java)
                             }
                 }
@@ -200,7 +198,7 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(R.drawable.logo_estapallorarle_round)
             .setContentTitle(titulo)
             .setContentText(contenido)
-            .setSubText("Info Pedidos Estapallorarle")
+            .setSubText("Info Pedidos")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

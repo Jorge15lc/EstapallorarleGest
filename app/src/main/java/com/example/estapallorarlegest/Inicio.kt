@@ -132,12 +132,6 @@ class Inicio : AppCompatActivity() {
 
         val id = Utilidades.obtenerIDuser(applicationContext)
 
-
-//        TODO SETEAR LO DEL
-//        if (!Utilidades.esAdmin(applicationContext)){
-//            ir_ver_foro.layoutParams = TextView.Layou
-//        }
-
         //Seteo de datos
         db_ref.child("tienda")
             .child("usuarios")
@@ -160,6 +154,7 @@ class Inicio : AppCompatActivity() {
                             .into(it)
                     }
                     title = "Tus datos "+pojo.nombre
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -289,26 +284,26 @@ class Inicio : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
+            val clave_id = "id"
+            val clave_tipo = "tipo"
+            val clave_url = "url"
             val ID = applicationContext.getString(R.string.app_id)
-            val sp_id = "${ID}_Registro_Usuarios"
-            val sp_tipo = "${ID}_Tipo_Usuario"
-            val sp_url = "${ID}_Imagen_Usuario"
-            val SP_id = applicationContext.getSharedPreferences(sp_id, 0)
-            val SP_tipo = applicationContext.getSharedPreferences(sp_tipo, 0)
-            val SP_url = applicationContext.getSharedPreferences(sp_url, 0)
-            with(SP_id.edit()){
-                putString("id", "")
+            val sp_name = "${ID}_Datos_Usuarios"
+            val SP = applicationContext.getSharedPreferences(sp_name, 0)
+
+            with(SP.edit()){
+                putString(clave_id, "")
                 commit()
             }
-            with(SP_tipo.edit()){
-                putString("tipo", "")
+            with(SP.edit()){
+                putBoolean(clave_tipo, false)
                 commit()
             }
-            with(SP_url.edit()){
-                putString("imagen", "")
+            with(SP.edit()){
+                putString(clave_url, "")
                 commit()
             }
-            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
         }
     }
 

@@ -17,12 +17,13 @@ class Utilidades {
     companion object {
 
         private val clave_id = "id"
-        private val clave_tipo = "admin"
-        private val clave_img = "imagen"
+        private val clave_tipo = "tipo"
+        private val clave_url = "url"
+        private val clave_mode = "mode"
 
         fun obtenerIDuser(contexto: Context): String {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Registro_Usuarios"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
             return SP.getString(clave_id, "") ?: ""
@@ -30,7 +31,7 @@ class Utilidades {
 
         fun establecerIDuser(contexto: Context, id: String) {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Registro_Usuarios"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
             with(SP.edit()) {
@@ -41,26 +42,26 @@ class Utilidades {
 
         fun obtenerUrlimgUser(contexto: Context): String {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Imagen_Usuario"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
-            return SP.getString(clave_img, "") ?: ""
+            return SP.getString(clave_url, "") ?: ""
         }
 
         fun establecerUrlimgUser(contexto: Context, url: String) {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Imagen_Usuario"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
             with(SP.edit()) {
-                putString(clave_img, url)
+                putString(clave_url, url)
                 commit()
             }
         }
 
         fun esAdmin(contexto: Context): Boolean {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Tipo_Usuario"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
             return SP.getBoolean(clave_tipo, false)
@@ -68,7 +69,7 @@ class Utilidades {
 
         fun establecerTipoUser(contexto: Context, tipo: Boolean) {
             val ID = contexto.getString(R.string.app_id)
-            val sp_name = "${ID}_Tipo_Usuario"
+            val sp_name = "${ID}_Datos_Usuarios"
             val SP = contexto.getSharedPreferences(sp_name, 0)
 
 
@@ -81,10 +82,10 @@ class Utilidades {
 
         fun getModeStatus(context: Context): Boolean {
             val ID = R.string.app_id
-            val sp_modo = "${ID}_Night_Mode_Status"
+            val sp_modo = "${ID}_Datos_Usuarios"
             val SP = context.getSharedPreferences(sp_modo, 0)
 
-            return SP.getBoolean("mode", false)
+            return SP.getBoolean(clave_mode ,false)
         }
 
         fun changeModeStatus(context: Context, value: Boolean, img : ImageView) {
@@ -96,16 +97,16 @@ class Utilidades {
                 img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_wb_sunny_24))
             }
             val ID = R.string.app_id
-            val sp_modo = "${ID}_Night_Mode_Status"
-            val SP = context.getSharedPreferences(sp_modo, 0)
+            val sp_name = "${ID}_Datos_Usuarios"
+            val SP = context.getSharedPreferences(sp_name, 0)
 
 
 
             with(SP.edit()) {
-                putBoolean("mode", value)
+                putBoolean(clave_mode, value)
                 commit()
             }
-            println("SHARED PREFERENCES NIGHT MODE: "+SP.getBoolean("mode", false))
+            println("##############SP CAMBIADAS NIGHT MODE: "+SP.getBoolean(clave_mode, false))
         }
 
         fun animacion(contexto: Context): CircularProgressDrawable {
