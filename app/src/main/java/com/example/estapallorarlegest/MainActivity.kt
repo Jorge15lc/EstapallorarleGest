@@ -191,11 +191,13 @@ class MainActivity : AppCompatActivity() {
         val iconolargo = BitmapFactory.decodeResource(resources, R.drawable.cookie_logo)
         val actividad = Intent(applicationContext, destino)
         actividad.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        //Hacemos la diferencia de intents para ver comprobar las notificaciones en la version de android
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(this, 0, actividad, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         } else {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(this, 0, actividad, PendingIntent.FLAG_UPDATE_CURRENT)
         }
+
 
 
         val notificacion = NotificationCompat.Builder(this, idcanal)
