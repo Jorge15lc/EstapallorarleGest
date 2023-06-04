@@ -50,7 +50,7 @@ class VerPedidos : AppCompatActivity() {
                             lista.add(pojo!!)
                         }else{
                             if (Utilidades.obtenerIDuser(applicationContext) == pojo!!.id_comprador){
-                                lista.add(pojo!!)
+                                lista.add(pojo)
                             }
                         }
                     }

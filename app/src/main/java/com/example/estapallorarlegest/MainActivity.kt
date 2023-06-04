@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class MainActivity : AppCompatActivity() {
 
     val db_ref : DatabaseReference by lazy {
-        FirebaseDatabase.getInstance().getReference()
+        FirebaseDatabase.getInstance().reference
     }
 
     val input_nom : TextInputEditText by lazy{
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
                                             "Cliente: ${pojo_ped.nom_comprador}",
-                                            "Nuevo Pedido de ${pojo_ped.nom_producto}",
+                                            "Nuevo Pedido de ${pojo_ped.nom_producto} ",
                                             VerPedidos::class.java)
                     }
                 }
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
                         generarNotificacion(id_noti,
                                             pojo_ped.id!!,
-                                            "Tu ${pojo_ped.nom_producto} está en preparación",
+                                            "Tu ${pojo_ped.nom_producto} está en preparación 🍪",
                                             "Pedido Horneandose", VerPedidos::class.java)
                     }
 
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
                         generarNotificacion(id_noti,
                             pojo_ped.id!!,
-                            "Tu ${pojo_ped.nom_producto} ha sido recogido",
+                            "Tu ${pojo_ped.nom_producto} ha sido recogido 🛒",
                             "Pedido Recogido", VerPedidos::class.java)
                     }
 
@@ -169,11 +169,11 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onChildRemoved(snapshot: DataSnapshot) {
-                    TODO("Not yet implemented")
+                    /* no-op */
                 }
 
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                    TODO("Not yet implemented")
+                    /* no-op */
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -190,8 +190,13 @@ class MainActivity : AppCompatActivity() {
         val idcanal = getString(R.string.id_canal)
         val iconolargo = BitmapFactory.decodeResource(resources, R.drawable.cookie_logo)
         val actividad = Intent(applicationContext, destino)
-        actividad.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        val pendingIntent = PendingIntent.getActivity(this, 0, actividad, PendingIntent.FLAG_UPDATE_CURRENT)
+        actividad.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
 
         val notificacion = NotificationCompat.Builder(this, idcanal)
             .setLargeIcon(iconolargo)

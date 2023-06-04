@@ -15,6 +15,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estapallorarlegest.R
@@ -81,7 +82,7 @@ class VerProductos : AppCompatActivity() {
         var prodmax = 5.0f
         val semaforo = CountDownLatch(1)
 
-        GlobalScope.launch (Dispatchers.IO){
+        lifecycleScope.launch (Dispatchers.IO){
             db_ref.child("tienda").child("productos")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -107,7 +108,7 @@ class VerProductos : AppCompatActivity() {
                         priceSlider.setValues(prodmin, prodmax)
 
                         //Inicializando el adaptador dentro de onDataChange
-                        adaptador = ProductosAdaptador(lista)
+                        adaptador = ProductosAdaptador(lista, lifecycleScope)
                         adaptador.precio_min = prodmin
                         adaptador.precio_max = prodmax
                         recycler.adapter = adaptador
@@ -116,7 +117,7 @@ class VerProductos : AppCompatActivity() {
                         recycler.adapter?.notifyDataSetChanged()
 
                         //Configuración del rango de deslizador en onDataChange
-                        priceSlider.addOnChangeListener { slider, value, fromUs ->
+                        priceSlider.addOnChangeListener { slider, _ , _ ->
                             val values = slider.values
 
                             var min = values[0]

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,11 +17,12 @@ import com.example.estapallorarlegest.asistenciaseventos.Solicitud
 import com.example.estapallorarlegest.asistenciaseventos.VerSolicitudes
 import com.example.estapallorarlegest.asistenciaseventos.VerUsuariosApuntados
 import com.google.firebase.database.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class EventoAdaptador(var lista_temas : MutableList<Evento>): RecyclerView.Adapter<EventoAdaptador.EventoViewHolder>(), Filterable {
+class EventoAdaptador(var lista_temas : MutableList<Evento>, private val lifecycleScope : LifecycleCoroutineScope): RecyclerView.Adapter<EventoAdaptador.EventoViewHolder>(), Filterable {
     private lateinit var contexto : Context
     private var lista_filtrada : MutableList<Evento> = lista_temas
     private var db_ref : DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -48,7 +51,7 @@ class EventoAdaptador(var lista_temas : MutableList<Evento>): RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
-        val item = lista_filtrada[position]!!
+        val item = lista_filtrada[position]
 
         val URL:String? = when(item.imagen){
             ""->null
@@ -98,7 +101,8 @@ class EventoAdaptador(var lista_temas : MutableList<Evento>): RecyclerView.Adapt
 
             holder.apuntarse.setOnLongClickListener {
                 var existe = false
-                GlobalScope.launch (Dispatchers.IO){
+
+                lifecycleScope.launch (Dispatchers.IO){
                     db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_usuario").equalTo(Utilidades.obtenerIDuser(contexto))
                         .addListenerForSingleValueEvent(object : ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {

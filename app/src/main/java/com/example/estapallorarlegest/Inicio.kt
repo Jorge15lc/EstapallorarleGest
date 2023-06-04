@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -29,10 +30,6 @@ import java.util.*
 import kotlin.reflect.KFunction1
 
 class Inicio : AppCompatActivity() {
-
-    val btn : Button by lazy{
-        findViewById(R.id.editar_datos_btn)
-    }
 
     val ir_ver_pedidos : Button by lazy {
         findViewById(R.id.btn_1_row)
@@ -138,13 +135,13 @@ class Inicio : AppCompatActivity() {
             .child(id)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val pojo = snapshot.getValue(Usuario::class.java)
-                    name_tv.text = pojo!!.nombre
-                    edit_name.setText(pojo!!.nombre)
-                    email_tv.text = pojo!!.correo
-                    edit_email.setText(pojo!!.correo)
-                    pass_tv.text = pojo!!.pass
-                    edit_pass.setText(pojo!!.pass)
+                    val pojo = snapshot.getValue(Usuario::class.java)!!
+                    name_tv.text = pojo.nombre
+                    edit_name.setText(pojo.nombre)
+                    email_tv.text = pojo.correo
+                    edit_email.setText(pojo.correo)
+                    pass_tv.text = pojo.pass
+                    edit_pass.setText(pojo.pass)
                     imagen.let {
                         Glide.with(applicationContext)
                             .asBitmap()
@@ -162,7 +159,7 @@ class Inicio : AppCompatActivity() {
                 }
             })
 
-        editar.setOnCheckedChangeListener { button, b ->
+        editar.setOnCheckedChangeListener { _, b ->
             visibilidad()
             if (b) {
                 imagen.setOnClickListener {
@@ -188,7 +185,7 @@ class Inicio : AppCompatActivity() {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     var pojo_user = snapshot.getValue(Usuario::class.java)!!
 
-                                    GlobalScope.launch(Dispatchers.IO) {
+                                    lifecycleScope.launch(Dispatchers.IO) {
                                         if (url_img == null) {
                                             url_img_fire = Utilidades.obtenerUrlimgUser(applicationContext)
                                         } else {
@@ -244,10 +241,11 @@ class Inicio : AppCompatActivity() {
         switch_ui.isChecked = Utilidades.getModeStatus(applicationContext)
         Utilidades.changeModeStatus(applicationContext, switch_ui.isChecked, ui_img)
 
-        switch_ui.setOnCheckedChangeListener { button, b ->
+        switch_ui.setOnCheckedChangeListener { _, b ->
 
             println("MODO NOCHE CHECKED CHANGE: "+Utilidades.getModeStatus(applicationContext))
             Utilidades.changeModeStatus(applicationContext, b, ui_img)
+
         }
 
         ir_ver_productos.setOnClickListener {
@@ -303,11 +301,14 @@ class Inicio : AppCompatActivity() {
                 putString(clave_url, "")
                 commit()
             }
-            finish()
+            //COn estas FLAGS controlamos que no se pueda volver a ninguna actividad
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 
-    fun visibilidad(){
+    private fun visibilidad(){
         if(editar.isChecked){
             //Enseñar
             btn_guardar.visibility = View.VISIBLE
@@ -341,7 +342,7 @@ class Inicio : AppCompatActivity() {
         }
     }
 
-    fun validarPass(e : EditText):Boolean{
+    private fun validarPass(e : EditText):Boolean{
         var valor = e.text.toString().trim()
         var correcto : Boolean
 
@@ -369,7 +370,7 @@ class Inicio : AppCompatActivity() {
         return correcto
     }
 
-    fun validarNombre(e: EditText):Boolean{
+    private fun validarNombre(e: EditText):Boolean{
         var correcto = true
         var valor = e.text.toString().trim()
 
@@ -381,7 +382,7 @@ class Inicio : AppCompatActivity() {
         return correcto
     }
 
-    fun validarEmail(e: EditText):Boolean{
+    private fun validarEmail(e: EditText):Boolean{
         var correcto = true
         var valor = e.text.toString().trim()
 
@@ -395,7 +396,7 @@ class Inicio : AppCompatActivity() {
         return correcto
     }
 
-    fun validarCampos():Boolean{
+    private fun validarCampos():Boolean{
         var correcto = true
         validar_campos.forEach { entrada, funcion ->
             correcto = correcto && funcion(entrada)
@@ -432,7 +433,7 @@ class Inicio : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Toast.makeText(applicationContext, "Pulsa logout", Toast.LENGTH_SHORT).show()
+        finishAffinity()
     }
 
     private fun setImageFromUri(uri: Uri) {

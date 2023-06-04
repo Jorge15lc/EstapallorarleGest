@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estapallorarlegest.R
@@ -46,7 +47,7 @@ class  VerEventos : AppCompatActivity() {
 
         todosEventos()
 
-        adaptador = EventoAdaptador(lista)
+        adaptador = EventoAdaptador(lista, lifecycleScope)
         recycler.adapter = adaptador
         recycler.layoutManager = LinearLayoutManager(applicationContext)
         recycler.setHasFixedSize(true)
@@ -63,7 +64,7 @@ class  VerEventos : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (!Utilidades.esAdmin(applicationContext)){
             return when(item.itemId){
-                R.id.filtros_temas_prods -> {
+                R.id.filtros_events -> {
                     onlyChoiceBuilder()
                     adaptador.notifyDataSetChanged()
                     true
@@ -79,11 +80,11 @@ class  VerEventos : AppCompatActivity() {
 
         AlertDialog.Builder(this@VerEventos)
             .setTitle("Filtros")
-            .setSingleChoiceItems(opcion, checked){ dialog, which ->
+            .setSingleChoiceItems(opcion, checked){ _, which ->
                 checked = which
                 println("////////////////Valor checked: "+checked+" -which: "+which)
             }
-            .setPositiveButton("Aplicar"){ dialog, which ->
+            .setPositiveButton("Aplicar"){ _, _ ->
                 if (checked == 0){
                     todosEventos()
                 }else{
@@ -117,10 +118,10 @@ class  VerEventos : AppCompatActivity() {
                         }
 
                         if(Utilidades.esAdmin(applicationContext)){
-                            lista.add(pojo!!)
+                            lista.add(pojo)
                         }else{
                             if (pojo.visible!!){
-                                lista.add(pojo!!)
+                                lista.add(pojo)
                             }
                         }
                     }
@@ -172,8 +173,8 @@ class  VerEventos : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_prods, menu)
-        val item = menu?.findItem(R.id.app_bar_search_prods)
+        menuInflater.inflate(R.menu.menu_eventos, menu)
+        val item = menu?.findItem(R.id.app_bar_search_events)
         val searchView = item?.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

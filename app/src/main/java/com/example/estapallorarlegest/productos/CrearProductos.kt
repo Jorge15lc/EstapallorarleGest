@@ -7,6 +7,7 @@ import android.os.Environment
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.estapallorarlegest.R
 import com.example.estapallorarlegest.Utilidades
 import com.google.android.material.textfield.TextInputEditText
@@ -103,7 +104,7 @@ class CrearProductos : AppCompatActivity() {
                                     val id_prod = db_ref.child("tienda")
                                         .child("productos").push().key!!
 
-                                    GlobalScope.launch(Dispatchers.IO) {
+                                    lifecycleScope.launch(Dispatchers.IO) {
                                         val url_imagen =
                                             Utilidades.guardarImagen(
                                                 sto_ref,

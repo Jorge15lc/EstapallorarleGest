@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.lifecycleScope
 import com.example.estapallorarlegest.*
 import com.example.estapallorarlegest.R
 import com.google.android.material.textfield.TextInputEditText
@@ -114,7 +115,7 @@ class CrearEventos : AppCompatActivity() {
                                     val id_user = db_ref.child("tienda")
                                         .child("eventos").push().key!!
 
-                                    GlobalScope.launch(Dispatchers.IO) {
+                                    lifecycleScope.launch(Dispatchers.IO) {
                                         val url_imagen = Utilidades.guardarImagen(
                                             sto_ref,
                                             id_user,
@@ -228,7 +229,6 @@ class CrearEventos : AppCompatActivity() {
 
     fun validDate(e:TextInputEditText):Boolean{
         var correcto:Boolean
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
         var valor=e.text.toString().trim()
 
         //Añadir una condicion para verificar que la fecha seleccionada sea mayor que la actual

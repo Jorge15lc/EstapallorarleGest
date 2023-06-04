@@ -7,6 +7,7 @@ import android.os.Environment
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.estapallorarlegest.R
 import com.example.estapallorarlegest.Utilidades
@@ -119,7 +120,7 @@ class InfoProducto : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             var pojo = snapshot.getValue(Producto::class.java)!!
 
-                            GlobalScope.launch(Dispatchers.IO) {
+                            lifecycleScope.launch(Dispatchers.IO) {
                                 if (url_img == null){
                                     url_img_fire = pojo.url_foto
                                 }else{

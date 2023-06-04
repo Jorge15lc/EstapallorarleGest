@@ -81,7 +81,7 @@ class Utilidades {
 
 
         fun getModeStatus(context: Context): Boolean {
-            val ID = R.string.app_id
+            val ID = context.getString(R.string.app_id)
             val sp_modo = "${ID}_Datos_Usuarios"
             val SP = context.getSharedPreferences(sp_modo, 0)
 
@@ -96,17 +96,14 @@ class Utilidades {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 img.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_wb_sunny_24))
             }
-            val ID = R.string.app_id
+            val ID = context.getString(R.string.app_id)
             val sp_name = "${ID}_Datos_Usuarios"
             val SP = context.getSharedPreferences(sp_name, 0)
-
-
 
             with(SP.edit()) {
                 putBoolean(clave_mode, value)
                 commit()
             }
-            println("##############SP CAMBIADAS NIGHT MODE: "+SP.getBoolean(clave_mode, false))
         }
 
         fun animacion(contexto: Context): CircularProgressDrawable {

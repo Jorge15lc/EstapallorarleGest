@@ -42,7 +42,7 @@ class PedidosAdaptador(var lista_pedidos : MutableList<Pedido>):RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: PedidoViewHolder, position: Int) {
-        val item_actual = lista_filtrada[position]!!
+        val item_actual = lista_filtrada[position]
 
         holder.nombre_prod.text = item_actual.nom_producto
         //Adaptar en funcion de lo que sea

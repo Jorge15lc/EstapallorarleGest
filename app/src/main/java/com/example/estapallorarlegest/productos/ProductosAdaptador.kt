@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.estapallorarlegest.R
@@ -14,14 +16,16 @@ import com.example.estapallorarlegest.Usuario
 import com.example.estapallorarlegest.Utilidades
 import com.example.estapallorarlegest.pedidos.Pedido
 import com.google.firebase.database.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ProductosAdaptador(var lista_prods : MutableList<Producto>, var selectedCategories : MutableList<Boolean> = MutableList(Utilidades.lista_categorias.size){true}):RecyclerView.Adapter<ProductosAdaptador.ProductoViewHolder>(), Filterable {
+class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val lifecycleScope : LifecycleCoroutineScope):RecyclerView.Adapter<ProductosAdaptador.ProductoViewHolder>(), Filterable {
     private lateinit var contexto : Context
     private var lista_filtrada : MutableList<Producto> = lista_prods
     private val db_ref : DatabaseReference = FirebaseDatabase.getInstance().reference
+    var selectedCategories : MutableList<Boolean> = MutableList(Utilidades.lista_categorias.size){true}
     var nombre_us : String = ""
     var precio_min = 0.0f
     var precio_max = 5.0f
@@ -49,7 +53,7 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, var selectedCa
     }
 
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val item = lista_filtrada[position]!!
+        val item = lista_filtrada[position]
 
         val URL:String? = when(item.url_foto){
             ""-> null
@@ -96,7 +100,7 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, var selectedCa
             holder.addcart.setOnLongClickListener {
                 val id_pedido = db_ref.child("tienda").child("pedidos").push().key!!
 
-                GlobalScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch(Dispatchers.IO) {
                     db_ref.child("tienda").child("usuarios").child(Utilidades.obtenerIDuser(contexto))
                         .addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {

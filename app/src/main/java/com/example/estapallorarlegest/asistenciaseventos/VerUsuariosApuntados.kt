@@ -28,11 +28,11 @@ class VerUsuariosApuntados : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_usuarios_apuntados)
 
-        val pojo = intent.getParcelableExtra<Evento>("evento")!!
-        title = "Asistentes a "+pojo.nombre
+        val pojo_ev = intent.getParcelableExtra<Evento>("evento")!!
+        title = "Asistentes a "+pojo_ev.nombre
         lista = mutableListOf()
 
-        db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_evento").equalTo(pojo.id)
+        db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_evento").equalTo(pojo_ev.id)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     lista.clear()

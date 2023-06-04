@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estapallorarlegest.*
@@ -91,7 +92,7 @@ class ChatGlobal : AppCompatActivity() {
         db_ref.child("tienda").child("chat_global")
             .addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    GlobalScope.launch(Dispatchers.IO) {
+                    lifecycleScope.launch(Dispatchers.IO) {
                         val pojo_mens = snapshot.getValue(Mensaje::class.java)
                         pojo_mens!!.id_dispositivo = user_id
 

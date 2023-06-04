@@ -52,7 +52,7 @@ class UsuariosAdaptador(var lista_usuarios : MutableList<Usuario>): RecyclerView
             .load(item.imagen)
             .into(holder.img)
 
-        holder.activo.setOnCheckedChangeListener { button, b ->
+        holder.activo.setOnCheckedChangeListener { _, b ->
             db_ref.child("tienda").child("usuarios").child(item.id!!).child("bloqueado").setValue(!b)
         }
 

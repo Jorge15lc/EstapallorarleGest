@@ -29,20 +29,20 @@ class VerSolicitudes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_solicitudes)
 
-        val pojo = intent.getParcelableExtra<Evento>("evento")!!
+        val pojo_ev = intent.getParcelableExtra<Evento>("evento")!!
 
         //TODO USER VER LOS EVENTOS SOLICITADOS Y VER INSCRITOS HACER DESDE EVENTO CON ALERTDIALOG
 
-        title = "Solicitudes de "+pojo.nombre
+        title = "Solicitudes de "+pojo_ev.nombre
         lista = mutableListOf()
 
-        db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_evento").equalTo(pojo.id)
+        db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_evento").equalTo(pojo_ev.id)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     lista.clear()
                     snapshot.children.forEach {
                         val pojo = it?.getValue(Solicitud::class.java)!!
-                        lista.add(pojo!!)
+                        lista.add(pojo)
                     }
                     recycler.adapter?.notifyDataSetChanged()
                 }

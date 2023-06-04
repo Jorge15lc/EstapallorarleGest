@@ -8,12 +8,12 @@ import android.os.Environment
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
@@ -70,6 +70,7 @@ class Registro : AppCompatActivity() {
     private var url_img : Uri?= null
     private lateinit var this_activity : AppCompatActivity
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
@@ -91,16 +92,16 @@ class Registro : AppCompatActivity() {
                                 val correo = email.text.toString().trim()
 
                                 val res = snapshot.children.singleOrNull {
-                                    val pojo = it.getValue(Usuario::class.java)
-                                    pojo!!.nombre == nom &&
-                                            pojo!!.correo == correo
+                                    val pojo = it.getValue(Usuario::class.java)!!
+                                    pojo.nombre == nom &&
+                                    pojo.correo == correo
                                 }
 
                                 if (res == null) {
                                     val id_user = db_ref.child("tienda")
                                                         .child("usuarios").push().key!!
 
-                                    GlobalScope.launch(Dispatchers.IO) {
+                                    lifecycleScope.launch(Dispatchers.IO) {
                                         val url_imagen =
                                             Utilidades.guardarImagen(sto_ref, id_user, url_img!!, "usuarios")
                                         val fecha_ins = LocalDate.now().toString()
@@ -186,7 +187,7 @@ class Registro : AppCompatActivity() {
         }
     }
 
-    fun validarCampos():Boolean{
+    private fun validarCampos():Boolean{
         var correcto = true
         validador_inputs.forEach { entrada, funcion ->
             correcto = correcto && funcion(entrada)
@@ -194,7 +195,7 @@ class Registro : AppCompatActivity() {
         return correcto
     }
 
-    fun validarNombre(e: TextInputEditText):Boolean{
+    private fun validarNombre(e: TextInputEditText):Boolean{
         var correcto = true
         var valor = e.text.toString().trim()
 
@@ -206,7 +207,7 @@ class Registro : AppCompatActivity() {
         return correcto
     }
 
-    fun validarEmail(e: TextInputEditText):Boolean{
+    private fun validarEmail(e: TextInputEditText):Boolean{
         var correcto = true
         var valor = e.text.toString().trim()
 
@@ -220,7 +221,7 @@ class Registro : AppCompatActivity() {
         return correcto
     }
 
-    fun validarPass1(e : TextInputEditText):Boolean{
+    private fun validarPass1(e : TextInputEditText):Boolean{
         var valor = e.text.toString().trim()
         var correcto : Boolean
 
@@ -233,7 +234,7 @@ class Registro : AppCompatActivity() {
             - Caracter Especial
          */
 
-        if (valor.matches("^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}\$".toRegex())){
+        if (valor.matches("^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])(\\S){8,16}\$".toRegex())){
             correcto=true
         }else{
             correcto=false
@@ -248,7 +249,7 @@ class Registro : AppCompatActivity() {
         return correcto
     }
 
-    fun validarTerms(c : CheckBox):Boolean{
+    private fun validarTerms(c : CheckBox):Boolean{
         var valor = c.isChecked
 
        if (!valor){

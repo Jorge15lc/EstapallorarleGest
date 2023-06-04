@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.estapallorarlegest.MainActivity
 import com.example.estapallorarlegest.R
@@ -127,7 +128,7 @@ class ModificarEvento :AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             var pojo = snapshot.getValue(Evento::class.java)!!
 
-                            GlobalScope.launch(Dispatchers.IO) {
+                            lifecycleScope.launch(Dispatchers.IO) {
                                 if (url_img == null){
                                     url_img_fire = pojo_ev.imagen
                                 }else{
@@ -241,7 +242,6 @@ class ModificarEvento :AppCompatActivity() {
 
     fun validDate(e:TextInputEditText):Boolean{
         var correcto:Boolean
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
         var valor=e.text.toString().trim()
 
         //Añadir una condicion para verificar que la fecha seleccionada sea mayor que la actual
