@@ -10,8 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -43,12 +42,13 @@ class VerProductos : AppCompatActivity() {
         findViewById(R.id.precios_range_slider)
     }
 
-//    val dropdownFilters : Button by lazy {
-//        findViewById(R.id.dropdown_price_filters)
-//    }
+    //No switch es euros si dolares
+    val divisa : Switch by lazy {
+        findViewById(R.id.divisas_switch)
+    }
 
     val db_ref : DatabaseReference by lazy {
-        FirebaseDatabase.getInstance().getReference()
+        FirebaseDatabase.getInstance().reference
     }
 
     val constraint : ConstraintLayout by lazy {
@@ -77,6 +77,11 @@ class VerProductos : AppCompatActivity() {
         }
 
         lista = mutableListOf<Producto>()
+
+        //SHARED PREFERENCES DIVISA
+        val ID = applicationContext.getString(R.string.app_id)
+        val sp_name = "${ID}_Datos_Usuarios"
+        val SP = applicationContext.getSharedPreferences(sp_name, 0)
 
         var prodmin = 0.0f
         var prodmax = 5.0f
@@ -109,6 +114,9 @@ class VerProductos : AppCompatActivity() {
 
                         //Inicializando el adaptador dentro de onDataChange
                         adaptador = ProductosAdaptador(lista, lifecycleScope)
+                        divisa.isChecked = SP.getBoolean("divisa", false)
+                        println("#############-SETEO DEL INICIO DIVISA: "+divisa.isChecked)
+                        adaptador.divisa_eur = divisa.isChecked
                         adaptador.precio_min = prodmin
                         adaptador.precio_max = prodmax
                         recycler.adapter = adaptador
@@ -138,6 +146,15 @@ class VerProductos : AppCompatActivity() {
         }
 
 
+        divisa.setOnCheckedChangeListener { _, b ->
+            adaptador.divisa_eur = !b
+            adaptador.notifyDataSetChanged()
+            with(SP.edit()){
+                putBoolean("divisa", b)
+                commit()
+            }
+            println("#########-DOLARES: "+SP.getBoolean("divisa", false))
+        }
 
 
 

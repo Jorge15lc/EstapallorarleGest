@@ -5,7 +5,11 @@
       <map>
         <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.281" />
         <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/drawable/ic_baseline_arrow_drop_down_circle_24.xml" value="0.219" />
-        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/layout/activity_ver_productos.xml" value="0.33" />
+        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/drawable/spinner_background.xml" value="0.2115" />
+        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/layout/activity_ver_productos.xml" value="0.48148148148148145" />
+        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/layout/custom_spinner.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/layout/dropdown_spinner_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/layout/item_prod_admin_layout.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/EAG/Desktop/EstapallorarleGest/app/src/main/res/menu/menu_prods.xml" value="0.2921875" />
         <entry key="..\:/Users/EAG/Documents/GitHub/EstapallorarleGest/app/src/main/res/layout/activity_crear_productos.xml" value="0.33" />
         <entry key="..\:/Users/EAG/Documents/GitHub/EstapallorarleGest/app/src/main/res/layout/custom_spinner.xml" value="0.17831813576494426" />

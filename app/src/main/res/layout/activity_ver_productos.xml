@@ -22,21 +22,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tv_prec_fi"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:text="Filtrar por Precio"
             android:textAlignment="center"
             android:textColor="@color/colorPrimario"
-            android:padding="5dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/precios_range_slider"
+            app:layout_constraintStart_toStartOf="@+id/precios_range_slider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="€"
+            android:textSize="16dp"
+            android:textColor="@color/colorTerciario"
+            app:layout_constraintBottom_toTopOf="@+id/precios_range_slider"
+            app:layout_constraintEnd_toStartOf="@+id/divisas_switch"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/divisas_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/precios_range_slider"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="$"
+            android:textSize="16dp"
+            android:textColor="@color/colorTerciario"
+            app:layout_constraintBottom_toTopOf="@+id/precios_range_slider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/precios_range_slider"

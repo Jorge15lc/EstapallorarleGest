@@ -82,7 +82,7 @@ class CrearProductos : AppCompatActivity() {
             R.layout.custom_spinner,
             Utilidades.lista_categorias
         )
-        adap_spinner.setDropDownViewResource(R.layout.dropdown_spinner_item)
+        adap_spinner.setDropDownViewResource(R.layout.custom_spinner)
         categorias.adapter = adap_spinner
 
         crear.setOnClickListener {

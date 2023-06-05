@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val lifecycleScope : LifecycleCoroutineScope):RecyclerView.Adapter<ProductosAdaptador.ProductoViewHolder>(), Filterable {
     private lateinit var contexto : Context
@@ -29,6 +30,7 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val li
     var nombre_us : String = ""
     var precio_min = 0.0f
     var precio_max = 5.0f
+    var divisa_eur = true
 
 
     inner class ProductoViewHolder(item : View) : RecyclerView.ViewHolder(item) {
@@ -62,7 +64,17 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val li
 
         holder.nombre.text = item.nombre
         holder.stock.text = item.stock.toString()
-        holder.precio.text = item.precio.toString()
+
+        println("SETEO DEL ADAPTADOR: $divisa_eur")
+
+        if (divisa_eur){
+            holder.precio.text = item.precio.toString()+"€"
+        }else{
+            val dolares = 1.07
+            val res = item.precio!!*dolares
+            var formateado = "%.2f".format(res).toDouble()
+            holder.precio.text = formateado.toString()+"$"
+        }
         holder.desc.text = item.descripcion
         Glide.with(contexto)
             .asBitmap()
@@ -130,6 +142,10 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val li
                 true
             }
         }
+    }
+
+    private fun cambioDivisa(){
+
     }
 
     override fun getItemCount(): Int {
