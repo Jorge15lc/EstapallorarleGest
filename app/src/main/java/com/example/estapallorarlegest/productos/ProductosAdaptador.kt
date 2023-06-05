@@ -22,7 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val lifecycleScope : LifecycleCoroutineScope):RecyclerView.Adapter<ProductosAdaptador.ProductoViewHolder>(), Filterable {
+class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val lifecycleScope : LifecycleCoroutineScope, var divisa_dol : Boolean):RecyclerView.Adapter<ProductosAdaptador.ProductoViewHolder>(), Filterable {
     private lateinit var contexto : Context
     private var lista_filtrada : MutableList<Producto> = lista_prods
     private val db_ref : DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -30,7 +30,6 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val li
     var nombre_us : String = ""
     var precio_min = 0.0f
     var precio_max = 5.0f
-    var divisa_eur = true
 
 
     inner class ProductoViewHolder(item : View) : RecyclerView.ViewHolder(item) {
@@ -65,9 +64,9 @@ class ProductosAdaptador(var lista_prods : MutableList<Producto>, private val li
         holder.nombre.text = item.nombre
         holder.stock.text = item.stock.toString()
 
-        println("SETEO DEL ADAPTADOR: $divisa_eur")
+        println("SETEO DEL ADAPTADOR: $divisa_dol")
 
-        if (divisa_eur){
+        if (!divisa_dol){
             holder.precio.text = item.precio.toString()+"€"
         }else{
             val dolares = 1.07

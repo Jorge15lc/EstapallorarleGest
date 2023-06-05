@@ -113,16 +113,16 @@ class VerProductos : AppCompatActivity() {
                         priceSlider.setValues(prodmin, prodmax)
 
                         //Inicializando el adaptador dentro de onDataChange
-                        adaptador = ProductosAdaptador(lista, lifecycleScope)
                         divisa.isChecked = SP.getBoolean("divisa", false)
                         println("#############-SETEO DEL INICIO DIVISA: "+divisa.isChecked)
-                        adaptador.divisa_eur = divisa.isChecked
+                        adaptador = ProductosAdaptador(lista, lifecycleScope, divisa.isChecked)
+                        adaptador.divisa_dol = divisa.isChecked
                         adaptador.precio_min = prodmin
                         adaptador.precio_max = prodmax
                         recycler.adapter = adaptador
                         recycler.layoutManager = LinearLayoutManager(applicationContext)
                         recycler.setHasFixedSize(true)
-                        recycler.adapter?.notifyDataSetChanged()
+                        adaptador.notifyDataSetChanged()
 
                         //Configuración del rango de deslizador en onDataChange
                         priceSlider.addOnChangeListener { slider, _ , _ ->
@@ -137,6 +137,16 @@ class VerProductos : AppCompatActivity() {
                             adaptador.filter.filter(query)
                             adaptador.notifyDataSetChanged()
                         }
+
+                        divisa.setOnCheckedChangeListener { _, b ->
+                            adaptador.divisa_dol = b
+                            adaptador.notifyDataSetChanged()
+                            with(SP.edit()){
+                                putBoolean("divisa", b)
+                                commit()
+                            }
+                            println("#########-DOLARES: "+SP.getBoolean("divisa", false))
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -144,20 +154,6 @@ class VerProductos : AppCompatActivity() {
                     }
                 })
         }
-
-
-        divisa.setOnCheckedChangeListener { _, b ->
-            adaptador.divisa_eur = !b
-            adaptador.notifyDataSetChanged()
-            with(SP.edit()){
-                putBoolean("divisa", b)
-                commit()
-            }
-            println("#########-DOLARES: "+SP.getBoolean("divisa", false))
-        }
-
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
