@@ -206,7 +206,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/btn_1_row"
+        android:id="@+id/btn_2_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -216,10 +216,10 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_1_row" />
 
     <Button
-        android:id="@+id/btn_2_row"
+        android:id="@+id/btn_1_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -229,7 +229,7 @@
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@id/btn_1_row"
         app:layout_constraintEnd_toEndOf="@id/btn_1_row"
-        app:layout_constraintTop_toBottomOf="@id/btn_1_row"/>
+        app:layout_constraintTop_toBottomOf="@id/cardView"/>
 
     <Button
         android:id="@+id/btn_3_row"

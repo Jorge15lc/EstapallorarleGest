@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
@@ -70,9 +71,15 @@ class  VerEventos : AppCompatActivity() {
                     true
                 }else -> super.onOptionsItemSelected(item)
             }
+        }else{
+            return when(item.itemId){
+                R.id.filtros_events -> {
+                    Toast.makeText(applicationContext, "El administrador no tiene filtros ", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
         }
-        return super.onOptionsItemSelected(item)
-
     }
 
     fun onlyChoiceBuilder(){

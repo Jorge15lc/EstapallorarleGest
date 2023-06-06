@@ -32,11 +32,11 @@ import kotlin.reflect.KFunction1
 class Inicio : AppCompatActivity() {
 
     val ir_ver_pedidos : Button by lazy {
-        findViewById(R.id.btn_1_row)
+        findViewById(R.id.btn_2_row)
     }
 
     val ir_ver_productos : Button by lazy {
-        findViewById(R.id.btn_2_row)
+        findViewById(R.id.btn_1_row)
     }
 
     val ir_ver_eventos : Button by lazy {
