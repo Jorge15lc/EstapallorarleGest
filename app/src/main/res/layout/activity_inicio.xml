@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
     tools:context=".Inicio">
 
     <androidx.cardview.widget.CardView
@@ -122,18 +121,19 @@
                 android:textColor="@color/white"
                 android:textSize="10dp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/switch_editar"
-                app:layout_constraintTop_toBottomOf="@+id/switch_editar" />
+                app:layout_constraintBottom_toBottomOf="@+id/switch_editar"
+                app:layout_constraintEnd_toEndOf="@+id/switch_ui_mode"
+                app:layout_constraintTop_toTopOf="@+id/switch_editar" />
 
             <Switch
                 android:id="@+id/switch_editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="-7dp"
+                android:layout_marginTop="10dp"
                 android:text="Editar Datos"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="@+id/btn_logout"
-                app:layout_constraintHorizontal_bias="0.21"
                 app:layout_constraintStart_toStartOf="@+id/btn_logout"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
