@@ -109,6 +109,7 @@ class ModificarEvento :AppCompatActivity() {
         nombre.setText(pojo_ev.nombre)
         precio.setText(pojo_ev.precio.toString())
         aforo.setText(pojo_ev.aforo.toString())
+        aforo.isEnabled = false
         fecha.setText(pojo_ev.fecha)
         visible.isChecked = pojo_ev.visible!!
         disponible.isChecked = pojo_ev.activo!!

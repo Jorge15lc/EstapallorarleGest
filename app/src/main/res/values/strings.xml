@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EstapallorarleGest</string>
+    <string name="app_name">Estapallorarle</string>
     <string name="app_id">com.example.estapalloralegest</string>
     <string name="db_root">tienda</string>
     <string name="id_canal">canal_pedidos</string>
