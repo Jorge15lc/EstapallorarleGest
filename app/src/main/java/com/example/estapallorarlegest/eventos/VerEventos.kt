@@ -56,9 +56,12 @@ class  VerEventos : AppCompatActivity() {
 
         if (Utilidades.esAdmin(applicationContext)){
             crear_evento.visibility = View.VISIBLE
+            title = "Administrar Eventos"
             crear_evento.setOnClickListener {
                 startActivity(Intent(applicationContext, CrearEventos::class.java))
             }
+        }else{
+            title = "Ver Eventos"
         }
     }
 

@@ -91,22 +91,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Inicia sesion con Google o  "
+        android:text="¿No tienes una cuenta?"
         android:textAlignment="center"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/pass_user_layout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/pass_user_layout"
         app:layout_constraintTop_toBottomOf="@+id/iniciar_ses_btn" />
-
-    <ImageView
-        android:id="@+id/google_register_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@+id/resgister_enl"
-        app:layout_constraintStart_toStartOf="@+id/info_reg"
-        app:layout_constraintTop_toBottomOf="@+id/info_reg"
-        app:srcCompat="@drawable/google_logo_" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
