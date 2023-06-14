@@ -95,40 +95,44 @@ class ChatEvento : AppCompatActivity() {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         val pojo_mens = snapshot.getValue(Mensaje::class.java)
-                        pojo_mens!!.id_dispositivo = user_id
-                        //Diferenciamos los mensajes por el mismo tema
-                        if (pojo_mens.id_evento == pojo_evento.id
-                            && pojo_mens.id_prod == ""){
+                        if(pojo_mens != null){
+                            pojo_mens.id_dispositivo = user_id
+                            //Diferenciamos los mensajes por el mismo tema
+                            if (pojo_mens.id_evento == pojo_evento.id
+                                && pojo_mens.id_prod == ""){
 
-                            if (pojo_mens.id_emisor == pojo_mens.id_dispositivo) {
-                                pojo_mens.imagen_emisor = user_imagen
-                            } else {
-                                val semaforo = CountDownLatch(1)
-                                //Realizamos otra consulta para sacar la imagen
-                                db_ref.child("tienda")
-                                    .child("usuarios")
-                                    .child(pojo_mens.id_emisor!!)
-                                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                            val pojo_usu = snapshot.getValue(Usuario::class.java)
-                                            pojo_mens.imagen_emisor = pojo_usu!!.imagen
-                                            semaforo.countDown()
-                                        }
+                                if (pojo_mens.id_emisor == pojo_mens.id_dispositivo) {
+                                    pojo_mens.imagen_emisor = user_imagen
+                                } else {
+                                    val semaforo = CountDownLatch(1)
+                                    //Realizamos otra consulta para sacar la imagen
+                                    db_ref.child("tienda")
+                                        .child("usuarios")
+                                        .child(pojo_mens.id_emisor!!)
+                                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                val pojo_usu = snapshot.getValue(Usuario::class.java)
+                                                if (pojo_usu != null){
+                                                    pojo_mens.imagen_emisor = pojo_usu.imagen
+                                                    semaforo.countDown()
+                                                }
+                                            }
 
-                                        override fun onCancelled(error: DatabaseError) {
-                                            TODO("Not yet implemented")
-                                        }
-                                    })
-                                semaforo.await()
-                            }
-                            runOnUiThread {
-                                if(pojo_mens.id_evento == pojo_evento.id){
-                                    lista.add(pojo_mens)
+                                            override fun onCancelled(error: DatabaseError) {
+                                                TODO("Not yet implemented")
+                                            }
+                                        })
+                                    semaforo.await()
                                 }
+                                runOnUiThread {
+                                    if(pojo_mens.id_evento == pojo_evento.id){
+                                        lista.add(pojo_mens)
+                                    }
 
-                                lista.sortBy { it.id }
-                                recycler.scrollToPosition(lista.size - 1)
-                                recycler.adapter!!.notifyDataSetChanged()
+                                    lista.sortBy { it.id }
+                                    recycler.scrollToPosition(lista.size - 1)
+                                    recycler.adapter!!.notifyDataSetChanged()
+                                }
                             }
                         }
                     }

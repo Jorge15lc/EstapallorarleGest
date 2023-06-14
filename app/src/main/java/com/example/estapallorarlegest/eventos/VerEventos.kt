@@ -17,8 +17,12 @@ import com.example.estapallorarlegest.R
 import com.example.estapallorarlegest.Utilidades
 import com.example.estapallorarlegest.asistenciaseventos.Solicitud
 import com.google.firebase.database.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.CountDownLatch
 
 class  VerEventos : AppCompatActivity() {
 
@@ -92,7 +96,6 @@ class  VerEventos : AppCompatActivity() {
             .setTitle("Filtros")
             .setSingleChoiceItems(opcion, checked){ _, which ->
                 checked = which
-                println("////////////////Valor checked: "+checked+" -which: "+which)
             }
             .setPositiveButton("Aplicar"){ _, _ ->
                 if (checked == 0){
@@ -148,18 +151,42 @@ class  VerEventos : AppCompatActivity() {
         db_ref.child("tienda").child("solicitudes_eventos").orderByChild("id_usuario").equalTo(Utilidades.obtenerIDuser(applicationContext))
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    val totalChildren = snapshot.childrenCount.toInt()
+                    val latch = CountDownLatch(totalChildren)
+
                     snapshot.children.forEach {
                         val pojo_sol = it.getValue(Solicitud::class.java)!!
-                        println(pojo_sol)
-                        println("ESTADO: "+pojo_sol.estado+" CHECK: "+check)
-                        if (pojo_sol.estado == check) {
+                        if (pojo_sol.estado == 0
+                            && check == 1) {
                             db_ref.child("tienda").child("eventos").child(pojo_sol.id_evento!!)
                                 .addValueEventListener(object : ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                         lista.clear()
-                                        val pojo_ev = snapshot.getValue(Evento::class.java)!!
-                                        println(pojo_ev)
-                                        lista.add(pojo_ev)
+                                        if (snapshot.exists()) {
+                                            val pojo_ev = snapshot.getValue(Evento::class.java)
+                                            if (pojo_ev != null) {
+                                                lista.add(pojo_ev)
+                                            }
+                                        }
+                                        latch.countDown()
+                                    }
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                        }else if(pojo_sol.estado == 1
+                            && check == 2){
+                            db_ref.child("tienda").child("eventos").child(pojo_sol.id_evento!!)
+                                .addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        lista.clear()
+                                        if (snapshot.exists()) {
+                                            val pojo_ev = snapshot.getValue(Evento::class.java)
+                                            println(pojo_ev)
+                                            if (pojo_ev != null) {
+                                                lista.add(pojo_ev)
+                                            }
+                                        }
                                         recycler.adapter?.notifyDataSetChanged()
                                     }
                                     override fun onCancelled(error: DatabaseError) {
@@ -167,11 +194,15 @@ class  VerEventos : AppCompatActivity() {
                                     }
                                 })
                         }else{
-                            lista.clear()
-                            recycler.adapter?.notifyDataSetChanged()
+                            latch.countDown()
                         }
-
-
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            latch.await()
+                            // Una vez que todas las consultas han terminado, actualizamos el RecyclerView en el hilo principal
+                            withContext(Dispatchers.Main) {
+                                recycler.adapter?.notifyDataSetChanged()
+                            }
+                        }
                     }
                 }
 

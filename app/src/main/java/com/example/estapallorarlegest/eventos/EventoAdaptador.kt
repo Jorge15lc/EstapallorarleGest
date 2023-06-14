@@ -148,7 +148,7 @@ class EventoAdaptador(var lista_temas : MutableList<Evento>, private val lifecyc
                                                 })
                                             Toast.makeText(
                                                 contexto,
-                                                "Te has apuntado a " + item.nombre!!.uppercase(),
+                                                "Has solicitado la asistencia a " + item.nombre!!.uppercase(),
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         } else {

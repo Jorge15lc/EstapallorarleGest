@@ -118,7 +118,7 @@
 
         <Button
             android:id="@+id/ped_listo_btn"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Listo"
             android:textSize="12dp"
@@ -131,7 +131,7 @@
 
         <Button
             android:id="@+id/ped_recogido_btn"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Recogido"
             android:textColor="@color/white"

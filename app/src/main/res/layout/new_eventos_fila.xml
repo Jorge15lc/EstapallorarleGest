@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTerciarioClaro"
-        android:paddingTop="7dp"
         android:paddingStart="5dp"
+        android:paddingTop="7dp"
         android:paddingEnd="5dp"
         android:paddingBottom="5dp"
         android:text="EVENTO TO GUAPO PIXA"
@@ -31,7 +31,8 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textColor="@color/white" />
 
     <ImageView
         android:id="@+id/img_event2"
